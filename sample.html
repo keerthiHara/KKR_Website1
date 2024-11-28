@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Move Effect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+    <style>
+        /* styles.css */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.image-container {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.image-container img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-container img.hovered {
+    transform: translateY(-20px);
+}
+
+.kk {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+
+  animation: rotate 1s linear infinite;
+  animation-play-state: paused;
+  animation-delay: calc(var(--scroll) * -1s);
+
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  border-radius: 24px;
+  line-height: 1.6;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 36px;
+  border-radius: 22px;
+  color: #ffffff;
+  overflow: hidden;
+  background: #0a3cff;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.content::before {
+  position: absolute;
+  content: "";
+  top: -4%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%);
+  background: #ced8ff;
+  z-index: -1;
+  transform-origin: bottom;
+
+  border-radius: inherit;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.content::after {
+  position: absolute;
+  content: "";
+  top: -8%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translate(-50%);
+  background: #e7ecff;
+  z-index: -2;
+  transform-origin: bottom;
+  border-radius: inherit;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.content svg {
+  width: 48px;
+  height: 48px;
+}
+
+.content .para {
+  z-index: 1;
+  opacity: 1;
+  font-size: 18px;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.content .link {
+  z-index: 1;
+  color: #fea000;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.content .link:hover {
+  text-decoration: underline;
+}
+
+.card:hover {
+  transform: translate(0px, -16px);
+}
+
+.card:hover .content::before {
+  rotate: -8deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.card:hover .content::after {
+  rotate: 8deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  --bg-card: #27272a;
+  --primary: #6d28d9;
+  --primary-800: #4c1d95;
+  --primary-shadow: #2e1065;
+  --light: #d9d9d9;
+  --zinc-800: #18181b;
+  --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  padding: 1rem;
+  width: 14rem;
+  background-color: var(--bg-card);
+
+  border-radius: 1rem;
+}
+
+.image_container {
+  overflow: hidden;
+  cursor: pointer;
+
+  position: relative;
+  z-index: 5;
+
+  width: 100%;
+  height: 8rem;
+  background-color: var(--primary-800);
+
+  border-radius: 0.5rem;
+}
+
+.image_container .image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 3rem;
+  fill: var(--light);
+}
+
+.title {
+  overflow: clip;
+
+  width: 100%;
+
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--light);
+  text-transform: capitalize;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+
+.size {
+  font-size: 0.75rem;
+  color: var(--light);
+}
+
+.list-size {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  margin-top: 0.25rem;
+}
+
+.list-size .item-list {
+  list-style: none;
+}
+
+.list-size .item-list-button {
+  cursor: pointer;
+
+  padding: 0.5rem;
+  background-color: var(--zinc-800);
+
+  font-size: 0.75rem;
+  color: var(--light);
+
+  border: 2px solid var(--zinc-800);
+  border-radius: 0.25rem;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.item-list-button:hover {
+  border: 2px solid var(--light);
+}
+.item-list-button:focus {
+  background-color: var(--primary);
+
+  border: 2px solid var(--primary-shadow);
+
+  box-shadow: inset 0px 1px 4px var(--primary-shadow);
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--light);
+}
+
+.cart-button {
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+
+  padding: 0.5rem;
+  width: 100%;
+  background-image: var(--bg-linear);
+
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--light);
+  text-wrap: nowrap;
+
+  border: 2px solid hsla(262, 83%, 58%, 0.5);
+  border-radius: 0.5rem;
+  box-shadow: inset 0 0 0.25rem 1px var(--light);
+}
+
+.cart-button .cart-icon {
+  width: 1rem;
+}
+
+
+/* form */
+.form {
+    height: 600px;
+    width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  font-family: inherit;
+  gap: 30px;
+  padding-inline: 2em;
+  padding-bottom: 0.4em;
+  background-color: #171717;
+  background-color: #0a192f;
+  border-radius: 20px;
+}
+
+.form-heading {
+  text-align: center;
+  margin: 2em;
+  color: #64ffda;
+  font-size: 1.2em;
+  background-color: transparent;
+  align-self: center;
+}
+
+.form-field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border-radius: 10px;
+  padding: 0.6em;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #171717;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+.input-field {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #ccd6f6;
+  padding-inline: 1em;
+}
+
+.sendMessage-btn {
+  cursor: pointer;
+  margin-bottom: 3em;
+  padding: 1em;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #64ffda;
+  font-weight: bold;
+  outline: 1px solid #64ffda;
+  transition: all ease-in-out 0.3s;
+}
+
+.sendMessage-btn:hover {
+  transition: all ease-in-out 0.3s;
+  background-color: #64ffda;
+  color: #000;
+  cursor: pointer;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+.form-card1 {
+  background-image: linear-gradient(163deg, #64ffda 0%, #64ffda 100%);
+  border-radius: 22px;
+  transition: all 0.3s;
+}
+
+.form-card1:hover {
+  box-shadow: 0px 0px 30px 1px rgba(100, 255, 218, 0.3);
+}
+
+.form-card2 {
+  border-radius: 0;
+  transition: all 0.2s;
+}
+
+.form-card2:hover {
+  transform: scale(0.98);
+  border-radius: 20px;
+}
+
+.a{
+    padding: 18px;
+}
+
+
+/* footer */
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+.footer-section {
+  background: #151414;
+  position: relative;
+}
+.footer-cta {
+  border-bottom: 1px solid #373636;
+}
+.single-cta i {
+  color: #ff5e14;
+  font-size: 30px;
+  float: left;
+  margin-top: 8px;
+}
+.cta-text {
+  padding-left: 15px;
+  display: inline-block;
+}
+.cta-text h4 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.cta-text span {
+  color: #757575;
+  font-size: 15px;
+}
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+.footer-pattern img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 330px;
+  background-size: cover;
+  background-position: 100% 100%;
+}
+.footer-logo {
+  margin-bottom: 30px;
+}
+.footer-logo img {
+    max-width: 200px;
+}
+.footer-text p {
+  margin-bottom: 14px;
+  font-size: 14px;
+      color: #7e7e7e;
+  line-height: 28px;
+}
+.footer-social-icon span {
+  color: #fff;
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+}
+.footer-social-icon a {
+  color: #fff;
+  font-size: 16px;
+  margin-right: 15px;
+}
+.footer-social-icon i {
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+}
+.facebook-bg{
+  background: #3B5998;
+}
+.twitter-bg{
+  background: #55ACEE;
+}
+.google-bg{
+  background: #DD4B39;
+}
+.footer-widget-heading h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  position: relative;
+}
+.footer-widget-heading h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  height: 2px;
+  width: 50px;
+  background: #ff5e14;
+}
+.footer-widget ul li {
+  display: inline-block;
+  float: left;
+  width: 50%;
+  margin-bottom: 12px;
+}
+.footer-widget ul li a:hover{
+  color: #ff5e14;
+}
+.footer-widget ul li a {
+  color: #878787;
+  text-transform: capitalize;
+}
+.subscribe-form {
+  position: relative;
+  overflow: hidden;
+}
+.subscribe-form input {
+  width: 100%;
+  padding: 14px 28px;
+  background: #2E2E2E;
+  border: 1px solid #2E2E2E;
+  color: #fff;
+}
+.subscribe-form button {
+    position: absolute;
+    right: 0;
+    background: #ff5e14;
+    padding: 13px 20px;
+    border: 1px solid #ff5e14;
+    top: 0;
+}
+.subscribe-form button i {
+  color: #fff;
+  font-size: 22px;
+  transform: rotate(-6deg);
+}
+.copyright-area{
+  background: #202020;
+  padding: 25px 0;
+}
+.copyright-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #878787;
+}
+.copyright-text p a{
+  color: #ff5e14;
+}
+.footer-menu li {
+  display: inline-block;
+  margin-left: 20px;
+}
+.footer-menu li:hover a{
+  color: #ff5e14;
+}
+.footer-menu li a {
+  font-size: 14px;
+  color: #878787;
+}
+
+    </style>
+</head>
+<body>
+   
+      <!--  -->
+      <div class="card">
+        <div class="image_container">
+          <img src="img/robotics-01.png" width="100%" height="100%">
+        </div>
+        <div class="title">
+          <span>New brand name</span>
+        </div>
+        <div>
+            <p  style="font-size: 15px; color: #ffffff;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente vel cumque nostrue</p>
+        </div>
+       
+        <div class="action">
+          <div class="price">
+            <span>$299</span>
+          </div>
+          <button class="cart-button">
+            <svg
+              class="cart-icon"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+            <span>Add to cart</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-card1">
+        <div class="form-card2">
+          <form class="form">
+            <p class="form-heading">Get In Touch</p>
+      
+            <div class="form-field">
+              <input required="" placeholder="Name" class="input-field" type="text" />
+            </div>
+      
+            <div class="form-field">
+              <input
+                required=""
+                placeholder="Email"
+                class="input-field"
+                type="email"
+              />
+            </div>
+      
+            <div class="form-field">
+              <input
+                required=""
+                placeholder="Subject"
+                class="input-field"
+                type="text"
+              />
+            </div>
+      
+            <div class="form-field">
+              <textarea
+                required=""
+                placeholder="Message"
+                cols="30"
+                rows="3"
+                class="input-field"
+              ></textarea>
+            </div>
+      
+            <button class="sendMessage-btn">Send Message</button>
+            <div>
+                <!-- Facebook -->
+            <i class="fab fa-facebook-f fa-2x a" style="color: #3b5998;"></i>
+            
+            <!-- Twitter -->
+            <i class="fab fa-twitter fa-2x a" style="color: #55acee;"></i>
+            
+            <!-- Google -->
+            <i class="fab fa-google fa-2x  a"   style="color: #dd4b39;"></i>
+            
+            <!-- Instagram -->
+            <i class="fab fa-instagram fa-2x  a" style="color: #ac2bac;"></i>
+            
+            <!-- Linkedin -->
+            <i class="fab fa-linkedin-in fa-2x a" style="color: #0082ca;"></i>
+            
+            
+            
+            
+            
+            <!-- Youtube -->
+            <i class="fab fa-youtube fa-2x a" style="color: #ed302f;"></i>
+            
+            
+            
+            <!-- Github -->
+            <i class="fab fa-github fa-2x a" style="color: #333333;"></i>
+            
+            
+            
+            <!-- Whatsapp -->
+            <i class="fab fa-whatsapp fa-2x a" style="color: #25d366;"></i>
+            
+            </div>      
+            
+          </form>
+        </div>
+      </div>
+      
+<div>
+    <!-- Facebook -->
+<i class="fab fa-facebook-f fa-2x a" style="color: #3b5998;"></i>
+
+<!-- Twitter -->
+<i class="fab fa-twitter fa-2x a" style="color: #55acee;"></i>
+
+<!-- Google -->
+<i class="fab fa-google fa-2x  a"   style="color: #dd4b39;"></i>
+
+<!-- Instagram -->
+<i class="fab fa-instagram fa-2x  a" style="color: #ac2bac;"></i>
+
+<!-- Linkedin -->
+<i class="fab fa-linkedin-in fa-2x a" style="color: #0082ca;"></i>
+
+
+
+
+
+<!-- Youtube -->
+<i class="fab fa-youtube fa-2x a" style="color: #ed302f;"></i>
+
+
+
+<!-- Github -->
+<i class="fab fa-github fa-2x a" style="color: #333333;"></i>
+
+
+
+<!-- Whatsapp -->
+<i class="fab fa-whatsapp fa-2x a" style="color: #25d366;"></i>
+
+</div>  
+
+
+<!-- footer -->
+
+<section>
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-cta pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="cta-text">
+                                <h4>Find us</h4>
+                                <span>1010 Avenue, sw 54321, chandigarh</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="fas fa-phone"></i>
+                            <div class="cta-text">
+                                <h4>Call us</h4>
+                                <span>9876543210 0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="far fa-envelope-open"></i>
+                            <div class="cta-text">
+                                <h4>Mail us</h4>
+                                <span>mail@info.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="index.html"><img src="https://i.ibb.co/QDy827D/ak-logo.png" class="img-fluid" alt="logo"></a>
+                            </div>
+                            <div class="footer-text">
+                                <p>Lorem ipsum dolor sit amet, consec tetur adipisicing elit, sed do eiusmod tempor incididuntut consec tetur adipisicing
+                                elit,Lorem ipsum dolor sit amet.</p>
+                            </div>
+                            <div class="footer-social-icon">
+                                <span>Follow us</span>
+                                <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                                <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
+                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Useful Links</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">about</a></li>
+                                <li><a href="#">services</a></li>
+                                <li><a href="#">portfolio</a></li>
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Our Services</a></li>
+                                <li><a href="#">Expert Team</a></li>
+                                <li><a href="#">Contact us</a></li>
+                                <li><a href="#">Latest News</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Subscribe</h3>
+                            </div>
+                            <div class="footer-text mb-25">
+                                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                            </div>
+                            <div class="subscribe-form">
+                                <form action="#">
+                                    <input type="text" placeholder="Email Address">
+                                    <button><i class="fab fa-telegram-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; 2018, All Right Reserved <a href="https://codepen.io/anupkumar92/">Anup</a></p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Terms</a></li>
+                                <li><a href="#">Privacy</a></li>
+                                <li><a href="#">Policy</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+</section>
+    <script>
+        // script.js
+const image = document.getElementById('image');
+
+image.addEventListener('mouseenter', () => {
+    image.classList.add('hovered');
+});
+
+image.addEventListener('mouseleave', () => {
+    image.classList.remove('hovered');
+});
+
+window.addEventListener('scroll', () => {
+    image.classList.remove('hovered');
+});
+
+
+window.addEventListener(
+  "scroll",
+  () => {
+    document.body.style.setProperty(
+      "--scroll",
+      window.pageYOffset / (document.body.offsetHeight - window.innerHeight)
+    );
+  },
+  false
+);
+
+    </script>
+</body>
+</html>
